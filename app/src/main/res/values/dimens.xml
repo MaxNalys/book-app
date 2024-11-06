@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="recycler_item_spacing">16dp</dimen>
+    <dimen name="item_book_size">20dp</dimen>
+    <dimen name="recycler_view_item_spacing">12dp</dimen>
+    <dimen name="recycler_view_item_size">125dp</dimen>
+</resources>

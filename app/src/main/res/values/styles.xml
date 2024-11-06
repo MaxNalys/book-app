@@ -1,0 +1,14 @@
+<!-- res/values/styles.xml -->
+<resources>
+    <!-- Стиль для активного елементу -->
+    <style name="TextAppearance.BottomNavigation.Active" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textColor">@color/selected_icon_color</item>
+    </style>
+
+    <!-- Стиль для неактивного елементу -->
+    <style name="TextAppearance.BottomNavigation.Inactive" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textColor">@color/unselected_icon_color</item>
+    </style>
+</resources>
