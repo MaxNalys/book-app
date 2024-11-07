@@ -1,4 +1,4 @@
-package com.example.bookapp.viewmodel
+package com.example.bookapp.ui.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -9,25 +9,27 @@ import com.example.bookapp.data.model.Book
 import com.example.bookapp.data.repository.BookRepository
 import kotlinx.coroutines.launch
 
-class BookViewModel(private val bookRepository: BookRepository) : ViewModel() {
+class BookViewModel(private val repository: BookRepository) : ViewModel() {
 
     private val _books = MutableLiveData<List<Book>>()
-    val books: LiveData<List<Book>> get() = _books
+    val books: LiveData<List<Book>> = _books
 
-    init {
-        fetchBooks()
-    }
-
-    private fun fetchBooks() {
+    // Отримати всі книги з репозиторію
+    fun getBooks() {
+        // Launching the suspend function in a coroutine scope
         viewModelScope.launch {
-            Log.d("BookViewModel", "Fetching books...")
-            val bookList = bookRepository.getBooks()
-            if (bookList.isNotEmpty()) {
-                _books.postValue(bookList)
-                Log.d("BookViewModel", "Books fetched successfully: ${bookList.size}")
-            } else {
-                Log.d("BookViewModel", "No books found.")
+            try {
+                val result = repository.getBooks() // This will call the suspend function
+                _books.value = result // Update LiveData with the result
+            } catch (e: Exception) {
+                Log.e("BookViewModel", "Error fetching books", e)
+                _books.value = emptyList() // Return empty list in case of error
             }
         }
+    }
+
+    // Фільтрація книг за рейтингом
+    fun filterBooksByRank(rank: Int) {
+        _books.value = _books.value?.filter { it.bookRank == rank }
     }
 }

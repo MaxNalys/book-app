@@ -1,6 +1,4 @@
-<!-- activity_main.xml -->
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/top_app_bar_menu"
         app:navigationIcon="@drawable/ic_menu"
-        app:title="SCRIBD"
+        app:title="@string/app_name"
         app:titleTextColor="#FFFFFF"
         tools:ignore="MissingConstraints" />
 
@@ -26,31 +24,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#111111"
-        app:tabTextColor="#FFFFFF"
-        app:tabSelectedTextColor="#66B2FF"
         app:layout_constraintTop_toBottomOf="@id/topAppBar"
+        app:tabSelectedTextColor="#66B2FF"
+        app:tabTextColor="#FFFFFF"
         tools:ignore="MissingConstraints">
 
         <com.google.android.material.tabs.TabItem
-            android:text="@string/books"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
-            />
+            android:layout_height="wrap_content"
+            android:text="@string/books" />
+
         <com.google.android.material.tabs.TabItem
-            android:text="@string/authors"
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
-            />
-
-
+            android:layout_height="wrap_content"
+            android:text="@string/authors" />
     </com.google.android.material.tabs.TabLayout>
 
     <!-- Scrollable content area with sections of books -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/tabLayout"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation">
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
+        app:layout_constraintTop_toBottomOf="@id/tabLayout">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,31 +53,69 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Section for Bestselling Books -->
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- Bestselling Books Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="5 stars Books"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:fontFamily="@font/roboto_bold" />
+                android:orientation="horizontal"
+                android:paddingEnd="16dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="5 stars Books"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:layout_weight="1"/>
+                <Button
+                    android:id="@+id/moreFiveStarsBooks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/more"
+                    android:textColor="#FF0E6EE4"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="14sp"
+                    android:drawableLeft="@drawable/ic_more"
+                    android:drawablePadding="8dp" />
+            </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/fiveStarsBooks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:overScrollMode="never" />
 
-            <!-- Section for Weekly Recommendations -->
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- 4 stars Books Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="4 stars Books"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/roboto_bold" />
+                android:orientation="horizontal"
+                android:paddingEnd="16dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="4 stars Books"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:paddingBottom="20dp"
+                    android:layout_weight="1"/>
+                <Button
+                    android:id="@+id/moreFourStarsBooks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/more"
+                    android:textColor="#FF0E6EE4"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="14sp"
+                    android:paddingTop="19dp"
+                    android:drawableLeft="@drawable/ic_more"
+                    android:drawablePadding="8dp" />
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/fourStarsBooks"
@@ -91,16 +124,35 @@
                 android:layout_marginTop="8dp"
                 android:overScrollMode="never" />
 
-            <!-- Additional sections can go here -->
-            <!-- Section for Weekly Recommendations -->
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- 3 stars Books Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="3 stars Books"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/roboto_bold" />
+                android:orientation="horizontal"
+                android:paddingEnd="16dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="3 stars Books"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:paddingBottom="20dp"
+                    android:layout_weight="1"/>
+                <Button
+                    android:id="@+id/moreThreeStarsBooks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/more"
+                    android:textColor="#FF0E6EE4"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="14sp"
+                    android:drawableLeft="@drawable/ic_more"
+                    android:drawablePadding="8dp"
+                    android:paddingTop="19dp"/>
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/threeStarsBooks"
@@ -108,15 +160,36 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:overScrollMode="never" />
-            <!-- Section for Weekly Recommendations -->
-            <TextView
-                android:layout_width="wrap_content"
+
+            <!-- 2 stars Books Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2 stars Books"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/roboto_bold" />
+                android:orientation="horizontal"
+                android:paddingEnd="16dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="2 stars Books"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:paddingBottom="20dp"
+                    android:layout_weight="1"/>
+                <Button
+                    android:id="@+id/moreTwoStarsBooks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/more"
+                    android:textColor="#FF0E6EE4"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="14sp"
+                    android:drawableLeft="@drawable/ic_more"
+                    android:drawablePadding="8dp"
+                    android:paddingTop="19dp"/>
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/twoStarsBooks"
@@ -124,15 +197,36 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:overScrollMode="never" />
-            <!-- Section for Weekly Recommendations -->
-            <TextView
-                android:layout_width="wrap_content"
+
+            <!-- 1 star Books Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1 star Books"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/roboto_bold" />
+                android:orientation="horizontal"
+                android:paddingEnd="16dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="1 star Books"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:paddingBottom="20dp"
+                    android:layout_weight="1"/>
+                <Button
+                    android:id="@+id/moreOneStarsBooks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/more"
+                    android:textColor="#FF0E6EE4"
+                    android:background="?attr/selectableItemBackground"
+                    android:textSize="14sp"
+                    android:drawableLeft="@drawable/ic_more"
+                    android:drawablePadding="8dp"
+                    android:paddingTop="19dp"/>
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/oneStarBooks"
@@ -147,11 +241,10 @@
     <!-- Bottom navigation bar -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#111111"
-        app:menu="@menu/bottom_navigation_menu"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:ignore="MissingConstraints" />
-
+        app:menu="@menu/bottom_navigation_menu"
+        android:background="#111111"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
