@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.bookapp.R
 import com.example.bookapp.data.model.Book
 
-class BookAdapter : ListAdapter<Book, BookAdapter.BookViewHolder>(BookDiffCallback()) {
+class BookAdapter(private val onBookClick: (Book) -> Unit) : ListAdapter<Book, BookAdapter.BookViewHolder>(BookDiffCallback()) {
 
     inner class BookViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.bookTitle)
@@ -25,6 +25,15 @@ class BookAdapter : ListAdapter<Book, BookAdapter.BookViewHolder>(BookDiffCallba
             itemView.findViewById(R.id.star4),
             itemView.findViewById(R.id.star5)
         )
+
+        init {
+            itemView.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onBookClick(getItem(position))  // викликається при кліку на книгу
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
@@ -36,30 +45,30 @@ class BookAdapter : ListAdapter<Book, BookAdapter.BookViewHolder>(BookDiffCallba
         val book = getItem(position)
         holder.title.text = book.bookTitle
         holder.author.text = book.bookAuthor
+
+        // Завантаження зображення через Glide
         Glide.with(holder.image.context)
             .load(book.bookImage)
+            .placeholder(R.drawable.ic_error) // запасне зображення
+            .error(R.drawable.ic_error) // зображення на випадок помилки
             .into(holder.image)
 
-        // Оновлення зірочок на основі рейтингу
         updateRatingStars(holder, book.bookRank)
     }
 
-    // Функція для оновлення зірочок
     private fun updateRatingStars(holder: BookViewHolder, rating: Int) {
-        // Максимальна кількість зірочок = 5, кожна зірочка = 3 бали (для 15-бального рейтингу)
-        val starsToFill = (rating / 3) // Оскільки максимальний рейтинг 15, кожна зірочка отримує 3 бали
-
+        val starsToFill = rating / 3
         for (i in 0 until 5) {
             val star = holder.stars[i]
             if (i < starsToFill) {
-                star.setImageResource(R.drawable.ic_star_filled)  // Заповнена зірочка
+                star.setImageResource(R.drawable.ic_star_filled)
             } else {
-                star.setImageResource(R.drawable.ic_star_empty)  // Порожня зірочка
+                star.setImageResource(R.drawable.ic_star_empty)
             }
         }
     }
 
-    class BookDiffCallback : DiffUtil.ItemCallback<Book>() {
+    private class BookDiffCallback : DiffUtil.ItemCallback<Book>() {
         override fun areItemsTheSame(oldItem: Book, newItem: Book): Boolean {
             return oldItem.bookIsbn == newItem.bookIsbn
         }
