@@ -8,15 +8,27 @@
     <!-- Top App Bar with logo and search icon -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBar"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#111111"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/top_app_bar_menu"
-        app:navigationIcon="@drawable/ic_menu"
         app:title="@string/app_name"
         app:titleTextColor="#FFFFFF"
-        tools:ignore="MissingConstraints" />
+
+        tools:ignore="MissingConstraints">
+
+        <!-- Logo Image -->
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_gravity="start|center_vertical"
+            android:src="@drawable/ic_logo"
+            android:layout_marginStart="16dp"/>
+
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <!-- TabLayout for switching between categories -->
     <com.google.android.material.tabs.TabLayout
@@ -34,10 +46,7 @@
             android:layout_height="wrap_content"
             android:text="@string/books" />
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/authors" />
+
     </com.google.android.material.tabs.TabLayout>
 
     <!-- Scrollable content area with sections of books -->

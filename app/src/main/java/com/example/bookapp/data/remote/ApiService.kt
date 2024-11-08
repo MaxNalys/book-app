@@ -4,6 +4,7 @@ import com.example.bookapp.BuildConfig
 import com.example.bookapp.data.model.Book
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -11,7 +12,7 @@ import retrofit2.http.GET
 // ApiService.kt
 interface ApiService {
     @GET("getBooks")
-    suspend fun getBooks(): List<Book>
+    suspend fun getBooks(): Response<List<Book>>
 }
 
 // RetrofitInstance.kt
