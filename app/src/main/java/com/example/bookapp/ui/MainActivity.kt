@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,8 +15,8 @@ import com.example.bookapp.data.model.Book
 import com.example.bookapp.data.remote.RetrofitInstance
 import com.example.bookapp.data.repository.BookRepository
 import com.example.bookapp.ui.adapter.BookAdapter
-import com.example.bookapp.ui.viewmodel.BookViewModel
-import com.example.bookapp.ui.viewmodel.BookViewModelFactory
+import com.example.bookapp.viewmodel.BookViewModel
+import com.example.bookapp.viewmodel.BookViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,32 +34,35 @@ class MainActivity : AppCompatActivity() {
         val factory = BookViewModelFactory(BookRepository(RetrofitInstance.apiService))
         bookViewModel = ViewModelProvider(this, factory).get(BookViewModel::class.java)
 
-        // Ініціалізація RecyclerView з GridLayoutManager (1 рядок на початку)
+        // Ініціалізація RecyclerView з GridLayoutManager
         val fiveStarsRecyclerView: RecyclerView = findViewById(R.id.fiveStarsBooks)
         val fourStarsRecyclerView: RecyclerView = findViewById(R.id.fourStarsBooks)
         val threeStarsRecyclerView: RecyclerView = findViewById(R.id.threeStarsBooks)
         val twoStarsRecyclerView: RecyclerView = findViewById(R.id.twoStarsBooks)
         val oneStarRecyclerView: RecyclerView = findViewById(R.id.oneStarBooks)
 
-        // Встановлюємо 1 рядок на початковому екрані (горизонтальний вигляд)
+        // Налаштування горизонтальних списків для кожного RecyclerView
         setUpRecyclerView(fiveStarsRecyclerView, 1, GridLayoutManager.HORIZONTAL)
         setUpRecyclerView(fourStarsRecyclerView, 1, GridLayoutManager.HORIZONTAL)
         setUpRecyclerView(threeStarsRecyclerView, 1, GridLayoutManager.HORIZONTAL)
         setUpRecyclerView(twoStarsRecyclerView, 1, GridLayoutManager.HORIZONTAL)
         setUpRecyclerView(oneStarRecyclerView, 1, GridLayoutManager.HORIZONTAL)
 
+        // Адаптери для кожного рейтингу
         fiveStarsAdapter = BookAdapter { book -> onBookClicked(book) }
         fourStarsAdapter = BookAdapter { book -> onBookClicked(book) }
         threeStarsAdapter = BookAdapter { book -> onBookClicked(book) }
         twoStarsAdapter = BookAdapter { book -> onBookClicked(book) }
         oneStarAdapter = BookAdapter { book -> onBookClicked(book) }
 
+        // Призначення адаптерів RecyclerView
         fiveStarsRecyclerView.adapter = fiveStarsAdapter
         fourStarsRecyclerView.adapter = fourStarsAdapter
         threeStarsRecyclerView.adapter = threeStarsAdapter
         twoStarsRecyclerView.adapter = twoStarsAdapter
         oneStarRecyclerView.adapter = oneStarAdapter
 
+        // Спостерігач за змінами в даних книг
         bookViewModel.books.observe(this, Observer { books ->
             if (books != null && books.isNotEmpty()) {
                 Log.d("MainActivity", "Books updated in RecyclerView: ${books.size}")
@@ -81,6 +85,7 @@ class MainActivity : AppCompatActivity() {
 
         bookViewModel.getBooks()
 
+        // Обробка натискання на кнопку для відкриття списку книг за рейтингом
         findViewById<Button>(R.id.moreFiveStarsBooks).setOnClickListener {
             openBooksByRatingActivity(15)
         }
@@ -102,12 +107,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Відкриває активність для перегляду книг за рейтингом
     private fun openBooksByRatingActivity(rating: Int) {
         val intent = Intent(this, BooksByRatingActivity::class.java)
         intent.putExtra("rating", rating)
         startActivity(intent)
     }
 
+    // Обробка натискання на книгу
     private fun onBookClicked(book: Book) {
         val intent = Intent(this, BookDetailActivity::class.java).apply {
             putExtra("BOOK", book)
@@ -115,6 +122,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    // Налаштування RecyclerView
     private fun setUpRecyclerView(recyclerView: RecyclerView, spanCount: Int, orientation: Int) {
         val layoutManager = GridLayoutManager(this, spanCount)
         layoutManager.orientation = orientation

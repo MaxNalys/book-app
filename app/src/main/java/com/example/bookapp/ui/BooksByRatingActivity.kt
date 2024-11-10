@@ -12,8 +12,9 @@ import com.example.bookapp.data.model.Book
 import com.example.bookapp.data.remote.RetrofitInstance
 import com.example.bookapp.data.repository.BookRepository
 import com.example.bookapp.ui.adapter.BookAdapter
-import com.example.bookapp.ui.viewmodel.BookViewModel
-import com.example.bookapp.ui.viewmodel.BookViewModelFactory
+import com.example.bookapp.viewmodel.BookViewModel
+import com.example.bookapp.viewmodel.BookViewModelFactory
+
 
 class BooksByRatingActivity : AppCompatActivity() {
 
